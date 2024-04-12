@@ -13,11 +13,12 @@ class Moto {
     private $porcentajeIncrementoAnual;
     private $activa;
 
-    public function __construct($cod, $cos, $anoFabr, $porcIncrAnual, $act) {
+    public function __construct($cod, $cos, $anoFabr, $porcIncrAnual, $descripcion, $act) {
         $this->codigo = $cod;
         $this->costo = $cos;
         $this->anoFabricacion = $anoFabr;
         $this->porcentajeIncrementoAnual = $porcIncrAnual;
+        $this->descripcion = $descripcion;
         $this->activa = $act;
     }
 
@@ -44,7 +45,6 @@ class Moto {
     public function getActiva() {
         return $this->activa;
     }
-
 
     //METODOS SET 
    
@@ -78,7 +78,7 @@ class Moto {
         $_compra=$this->getCosto();//llamamos al precio de costo
         $activa= $this->getActiva(); //verificamos si esta activa (true o false)con respecto a la venta
         $anioFab=$this->getAnoFabricacion();//obtenemos el año de fabricacion
-        $anio_actual = date("Y");//obtenemos el año actual
+        $anio_actual = intval(date("Y"));//obtenemos el año actual
         $anio = $anio_actual-$anioFab;//calculamos los años que pasaron desde el año de fabricacion al año actual
         $por_inc_anual=$this->getPorcentajeIncrementoAnual();//accedemos al porcentaje anual
         if ($activa) {

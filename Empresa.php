@@ -71,29 +71,37 @@ class Empresa {
      public function registrarVenta($colCodigosMoto, $objCliente){
         $i=0;
         $motoRetornada=null;
-        $arrayMotosVenta=$this->getColMotos();
+        $arrayMotos=[];
+        $numVenta = count($this->getColVentas())+1;
+        $fecha= date("Y");
+        $preFin=0;
+        $nuevaVenta = new Venta($numVenta, $fecha , $objCliente, $arrayMotos, 0);
         // compara cada codigo de la coleccion con cada moto de la coleccion de motos
         while ($i < count($colCodigosMoto) && ($motoRetornada==null)) {
            $motoRetornada=$this-> retornarMoto($colCodigosMoto[$i]);
            //
-           if($motoRetornada== null){
-            $i++;
-           }
-        }
-        if ($motoRetornada!=null) {
-            if ($motoRetornada->getActiva()==true && $objCliente->getDadoBaja()==false) {
-                $nuevoArrayMotosVenta=array_push($arrayMotosVenta, $motoRetornada);
-                $this->getColVentas()->setArraysMotos($nuevoArrayMotosVenta);
+           if ($motoRetornada!=null) {
+            if ($motoRetornada->getActiva()==true && $objCliente->getDadoBaja()==true) {
+                $nuevaVenta->incorporarMoto($motoRetornada);
             }
         }
+            $i++;
+        }
+        if($nuevaVenta->getPrecioFinal()>0){
+            $arrVentasEmpresa= $this->getColVentas();
+           array_push($arrVentasEmpresa, $nuevaVenta);
+            $this->setColVentas($arrVentasEmpresa);
+        }
+        return $nuevaVenta->getPrecioFinal();
+       
      }
 
      public function retornarVentasXCliente($tipo,$numDoc){
         $colVentasCliente=[];
         $ventas=$this->getColVentas();
         foreach($ventas as $venta){
-            if($venta->getCliente()->get_tipo_dni() == $tipo){
-                if($venta->getCliente()->get_nro_dni() == $numDoc)
+            if($venta->getobjCliente()->get_tipo_dni() == $tipo){
+                if($venta->getobjCliente()->get_nro_dni() == $numDoc)
                 $colVentasClientes[]=$ventas;
             }
         }

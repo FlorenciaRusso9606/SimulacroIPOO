@@ -37,7 +37,7 @@ class Venta {
         return $this->objCliente;
     }
 
-    public function getArraysMotos() {
+    public function getArrayMotos() {
         return $this->arraysMotos;
     }
 
@@ -57,7 +57,7 @@ class Venta {
         $this->objCliente = $cli;
     }
 
-    public function setArraysMotos($arraysMotos) {
+    public function setArrayMotos($arraysMotos) {
         $this->arraysMotos = $arraysMotos;
     }
 
@@ -67,11 +67,11 @@ class Venta {
 
     public function incorporarMoto($objMoto){
         $precioMotoVenta= $objMoto->darPrecioVenta();//obtenemos el precio final
-        $arrayMotos=$this->getArraysMotos();//accedo a la coleccion de motos
+        $arrayMotos=$this->getArrayMotos();//accedo a la coleccion de motos
         if ($precioMotoVenta>0) {
             array_push($arrayMotos,$objMoto);//agrego el objeto moto a la coleccion
-            $this->setArraysMotos($arrayMotos);//cambie el valor del arrays
-            $this->setPrecioFinal($precioMotoVenta);//cambie el precio de venta
+            $this->setArrayMotos($arrayMotos);//cambie el valor del arrays
+            $this->setPrecioFinal($this->getPrecioFinal()+ $precioMotoVenta);//cambie el precio de venta
         }
 
     }
@@ -88,13 +88,12 @@ class Venta {
 
 
     public function __toString() {
-        $arraysMotos= $this->obtValoresArrays($this->getArraysMotos());
+        $arrayMotos= $this->obtValoresArrays($this->getArrayMotos());
         $rta = "Número de Venta: " . $this->getNumero() . "\n";
         $rta .= "Fecha: " . $this->getFecha() . "\n";
-        $rta .= "objCliente: " . $this->getobjCliente() . "\n";
-        $rta .= "coleccion de motos:" . $arraysMotos . "\n";
+        $rta .= "Cliente: " . $this->getobjCliente() . "\n";
+        $rta .= "Coleccion de motos:" . $arrayMotos . "\n";
         $rta .= ":\n";
-       
         $rta .= "Precio Final: " . $this->getPrecioFinal() . "\n";
         return $rta;
     }
