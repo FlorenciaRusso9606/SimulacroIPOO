@@ -75,7 +75,30 @@ class Venta {
         }
 
     }
-
+    public function retornarTotalVentaNacional(){
+        $motos = $this->getArrayMotos();
+        $totalVentaNacional = 0;
+        foreach($motos as $moto){
+            if($moto instanceof Nacional){
+                if($moto->darPrecioVenta() != -1){
+                    $totalVentaNacional += $moto->darPrecioVenta();
+                }
+            }
+        }
+        return $totalVentaNacional;
+    }
+    public function retornarMotosImportadas(){
+        $motos = $this->getArrayMotos();
+        $colMotosImportadas= [];
+        foreach($motos as $moto){
+            if($moto instanceof Importada){
+                if($moto->darPrecioVenta() != -1){
+                    $colMotosImportadas[]= $moto;
+                }
+            }
+        }
+        return $colMotosImportadas;
+    }
     // 
     private function obtValoresArrays($array){
         $cadena="";

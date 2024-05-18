@@ -19,29 +19,42 @@ corresponden con el tipo y número de documento del $objCliente2
 include "cliente.php";
 include "venta.php";
 include "moto.php";
+include_once "nacionales.php";
+include_once "importadas.php";
 include "empresa.php";
 $objCliente1 = new Cliente("Florencia", "Russo", false, "DNI", "12345678");
 $objCliente2 = new Cliente("Nicolás", "Flores", true, "DNI", "87654321");
 $colClientes=[$objCliente1, $objCliente2];
-//     public function __construct($cod, $cos, $anoFabr, $porcIncrAnual, $descripcion, $act) {
-$objMoto1= new Moto(11, 2230000, 2022, 85, "Benelli Imperiale 400", true);
-$objMoto2= new Moto(12, 584000, 2021, 70,"Zanella Zr 150 Ohc",  true);
-$objMoto3= new Moto(13, 999900, 2023, 55,"Zanella Patagonian Eagle 250", false);
+
+$objMoto1= new Nacional(11, 2230000, 2022, 85, "Benelli Imperiale 400", true, 10);
+$objMoto2= new Nacional(12, 584000, 2021, 70,"Zanella Zr 150 Ohc",  true, 10);
+$objMoto3= new Nacional(13, 999900, 2023, 55,"Zanella Patagonian Eagle 250", false, null);
+//public function __construct($cod, $cos, $anoFabr, $porcIncrAnual, $descripcion, $act, $pais, $impuestosImportacion){
+$objMoto4= new Importada(14, 12499900, 2022, 100, "Pitbike Enduro", true, "Francia",6244400);
 $colMotos=[$objMoto1, $objMoto2, $objMoto3];
 $colVentasRealizadas=[];
-// public function __construct($den, $dir, $cli, $mot, $vtas) {
+
  $empresa = new Empresa("Alta Gama", "Av Argenetina 123", $colClientes, $colMotos,$colVentasRealizadas);
-$colCodigosMoto=[];
-foreach($colMotos as $moto){
-    $codigoMoto=$moto->getCodigo();
-    $colCodigosMoto[]=$codigoMoto;
-}
+ $colCodigosMoto=[11,12,13,14];
+
 
 $registrarVenta= $empresa->registrarVenta($colCodigosMoto, $objCliente2);
+echo "PRIMERA VENTA\n";
+echo "Precio de venta: ". $registrarVenta ."\n";
+$colCodigosMoto=[14];
+$registrarVenta= $empresa->registrarVenta($colCodigosMoto, $objCliente2);
+echo "SEGUNDA VENTA\n";
 echo "Precio de venta: ". $registrarVenta ."\n";
 
-$tipo=$objCliente1->get_tipo_dni();
-$numDoc=$objCliente1->get_nro_dni();
-$empresa->retornarVentasXCliente($tipo,$numDoc);
-echo $empresa;
+$colCodigosMoto3=[14,2];
+$registrarVenta= $empresa->registrarVenta($colCodigosMoto3, $objCliente2);
+echo "TERCERA VENTA\n";
+echo "Precio de venta: ". $registrarVenta ."\n";
+
+$ventasImportadas= $empresa->informarSumaVentasImportadas();
+echo "Ventas Importadas: " . $ventasImportadas . "\n";
+
+$ventasImportadas= $empresa->informarSumaVentasNacionales();
+echo "Ventas Nacionales: " . $ventasImportadas . "\n";
+
 ?>

@@ -69,28 +69,25 @@ class Empresa {
     }return $objMoto;
      }      
      public function registrarVenta($colCodigosMoto, $objCliente){
-        $i=0;
         $motoRetornada=null;
         $arrayMotos=[];
         $numVenta = count($this->getColVentas())+1;
-        $fecha= date("Y");
+        $fecha = date("Y-m-d");
         $preFin=0;
-        $nuevaVenta = new Venta($numVenta, $fecha , $objCliente, $arrayMotos, 0);
+        $colVentas = $this->getColVentas();
+        $nuevaVenta = new Venta($numVenta, $fecha , $objCliente, $arrayMotos, $preFin);
         // compara cada codigo de la coleccion con cada moto de la coleccion de motos
-        while ($i < count($colCodigosMoto) && ($motoRetornada==null)) {
-           $motoRetornada=$this-> retornarMoto($colCodigosMoto[$i]);
-           //
+        foreach(($colCodigosMoto) as $codigoMoto) {
+           $motoRetornada=$this-> retornarMoto($codigoMoto);
            if ($motoRetornada!=null) {
             if ($motoRetornada->getActiva()==true && $objCliente->getDadoBaja()==true) {
                 $nuevaVenta->incorporarMoto($motoRetornada);
             }
         }
-            $i++;
         }
-        if($nuevaVenta->getPrecioFinal()>0){
-            $arrVentasEmpresa= $this->getColVentas();
-           array_push($arrVentasEmpresa, $nuevaVenta);
-            $this->setColVentas($arrVentasEmpresa);
+        if(count($nuevaVenta->getArrayMotos())>0){
+            array_push($colVentas, $nuevaVenta);
+                $this->setColVentas($colVentas);
         }
         return $nuevaVenta->getPrecioFinal();
        
@@ -107,7 +104,26 @@ class Empresa {
         }
         return $colVentasCliente;
      }
-
+     public function informarSumaVentasNacionales(){
+        $colVentas = $this->getColVentas();
+        $totalVentasNacionales =0;
+        foreach ($colVentas as $venta){
+            $totalVentasNacionales += $venta->retornarTotalVentaNacional();
+        }
+        
+        return $totalVentasNacionales;
+     }
+     public function informarSumaVentasImportadas(){
+        $colVentas = $this->getColVentas();
+        $totalVentasImportadas = 0;
+        foreach ($colVentas as $venta) {
+            $motosImportadas = $venta->retornarMotosImportadas();
+            foreach ($motosImportadas as $motoImp) {
+                $totalVentasImportadas += $motoImp->darPrecioVenta();
+            }
+        }
+        return $totalVentasImportadas;
+     }
     public function __toString() {
         $rta = "Denominación: " . $this->getDenominacion() . "\n";
         $rta .= "Dirección: " . $this->getDireccion() . "\n";
