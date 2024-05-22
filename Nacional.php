@@ -3,7 +3,7 @@ class Nacional extends Moto{
     private $dcto;
     public function __construct($cod, $cos, $anoFabr, $porcIncrAnual, $descripcion, $act, $dcto){
         parent::__construct($cod, $cos, $anoFabr, $porcIncrAnual, $descripcion, $act);
-        $this->dcto = $dcto;
+        $this->dcto= $dcto ?? 15;
     }
     public function getDcto(){
         return $this->dcto;
@@ -21,6 +21,7 @@ class Nacional extends Moto{
     {
         $venta= parent::darPrecioVenta();
         if($venta != -1){
+            // chequear que el descuento sea >=0
             $descuento = ($venta * $this->getDcto()) / 100;
             $venta= $venta - $descuento;
         }

@@ -14,14 +14,14 @@ class Venta {
     private $numero;
     private $fecha;
     private $objCliente;
-    private $arraysMotos;
+    private $arrayMotos;
     private $precioFinal;
 
-    public function __construct($nro, $fecha, $cli, $arraysMotos, $preFin) {
+    public function __construct($nro, $fecha, $cli, $arrayMotos, $preFin) {
         $this->numero = $nro;
         $this->fecha = $fecha;
         $this->objCliente = $cli;
-        $this->arraysMotos = $arraysMotos;
+        $this->arrayMotos = $arrayMotos;
         $this->precioFinal = $preFin;
     }
 
@@ -38,7 +38,7 @@ class Venta {
     }
 
     public function getArrayMotos() {
-        return $this->arraysMotos;
+        return $this->arrayMotos;
     }
 
     public function getPrecioFinal() {
@@ -57,8 +57,8 @@ class Venta {
         $this->objCliente = $cli;
     }
 
-    public function setArrayMotos($arraysMotos) {
-        $this->arraysMotos = $arraysMotos;
+    public function setArrayMotos($arrayMotos) {
+        $this->arrayMotos = $arrayMotos;
     }
 
     public function setPrecioFinal($preFin) {
@@ -73,7 +73,6 @@ class Venta {
             $this->setArrayMotos($arrayMotos);//cambie el valor del arrays
             $this->setPrecioFinal($this->getPrecioFinal()+ $precioMotoVenta);//cambie el precio de venta
         }
-
     }
     public function retornarTotalVentaNacional(){
         $motos = $this->getArrayMotos();
@@ -92,14 +91,11 @@ class Venta {
         $colMotosImportadas= [];
         foreach($motos as $moto){
             if($moto instanceof Importada){
-                if($moto->darPrecioVenta() != -1){
-                    $colMotosImportadas[]= $moto;
-                }
+                $colMotosImportadas[]= $moto;
             }
         }
         return $colMotosImportadas;
     }
-    // 
     private function obtValoresArrays($array){
         $cadena="";
         foreach ($array as $elementoArray) {
@@ -107,8 +103,6 @@ class Venta {
         }
         return $cadena;
     }
-
-
 
     public function __toString() {
         $arrayMotos= $this->obtValoresArrays($this->getArrayMotos());

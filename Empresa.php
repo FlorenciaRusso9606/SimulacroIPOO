@@ -113,16 +113,16 @@ class Empresa {
         
         return $totalVentasNacionales;
      }
-     public function informarSumaVentasImportadas(){
+     public function informarVentasImportadas(){
         $colVentas = $this->getColVentas();
-        $totalVentasImportadas = 0;
+        $ventasMotosImportadas = [];
         foreach ($colVentas as $venta) {
             $motosImportadas = $venta->retornarMotosImportadas();
-            foreach ($motosImportadas as $motoImp) {
-                $totalVentasImportadas += $motoImp->darPrecioVenta();
+            if(count($motosImportadas)>0){
+                $ventasMotosImportadas [] = $venta;
             }
         }
-        return $totalVentasImportadas;
+        return $ventasMotosImportadas;
      }
     public function __toString() {
         $rta = "Denominación: " . $this->getDenominacion() . "\n";

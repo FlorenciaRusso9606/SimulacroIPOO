@@ -19,7 +19,7 @@ class Cliente {//nombre, apellido,dado de baja,tipo y el númer de doc
         $this-> nroDni=$dni;
     }
     // METODOS GET
-    public function getNomb(){
+    public function getNombre(){
         return $this->nombre;
     }
     public function getApellido(){
@@ -28,10 +28,10 @@ class Cliente {//nombre, apellido,dado de baja,tipo y el númer de doc
     public function getDadoBaja(){
         return $this->dadoDeBaja;
     }
-    public function get_tipo_dni(){
+    public function getTipoDni(){
         return $this->tipoDni;
     }
-    public function get_nro_dni(){
+    public function getNroDni(){
         return $this->nroDni;
     }
 
@@ -45,23 +45,23 @@ class Cliente {//nombre, apellido,dado de baja,tipo y el númer de doc
     public function setDadoBaja($dadoBaja){
         $this->dadoDeBaja=$dadoBaja;
     }
-    public function set_tipo_dni($tipo){
+    public function setTipoDni($tipo){
         $this->tipoDni=$tipo;
     }
-    public function set_nro_dni($dni){
+    public function setNroDni($dni){
         $this->nroDni=$dni;
     }
     public function __toString(){
-        $nom=$this->getNomb();
+        $nom=$this->getNombre();
         $ap=$this->getApellido();
         $dadoDeBaja = $this->getDadoBaja() ? "Sí" : "No"; // expresión ternaria
-        $tipo_dni=$this->get_tipo_dni();
-        $nro_dni=$this->get_nro_dni();
+        $tipoDni=$this->getTipoDni();
+        $nroDni=$this->getNroDni();
         $rta="Nombre: " . $nom . "\n";
         $rta.="Apellido: " . $ap . "\n";
         $rta.="Dado de baja: " . $dadoDeBaja . "\n";
-        $rta.="Tipo de documento: " . $tipo_dni . "\n";
-        $rta.="Numero de documento: " . $nro_dni . "\n";
+        $rta.="Tipo de documento: " . $tipoDni . "\n";
+        $rta.="Numero de documento: " . $nroDni . "\n";
         return $rta;
         
     }
